@@ -1,14 +1,15 @@
 import React, { useRef, useState } from 'react'
-import { Dimensions, View, TouchableOpacity, StyleSheet, Text, Image } from 'react-native'
-import { iconAnimation } from '../constants/iconAnimation'
-import AnimatedIcon from './AnimatedIcon'
-import SocialIconBar from './SocialIconBar'
-const { width } = Dimensions.get('window')
+import { TouchableOpacity, Image } from 'react-native'
+import { View, Text } from '../Themed'
+import { iconAnimation } from '../../constants/iconAnimation'
+import AnimatedIcon from '../AnimatedIcon'
+import SocialIconBar from '../SocialIconBar/SocialIconBar'
+import styles from './PhotoCard.styles'
 
 type PhotoCardType = {
   imgSrc: string
   description: string
-  onPress: () => void
+  onPress?: () => void
 }
 
 const PhotoCard = ({ imgSrc, description, onPress }: PhotoCardType) => {
@@ -31,9 +32,11 @@ const PhotoCard = ({ imgSrc, description, onPress }: PhotoCardType) => {
         liked: isLiked,
       })
       !isLiked && setIsLiked(true)
+    } else {
+      onPress && onPress()
     }
+
     lastPress.current = firstClickTimeInSeconds
-    onPress()
   }
 
   const handleToggleLike = () => {
@@ -48,7 +51,7 @@ const PhotoCard = ({ imgSrc, description, onPress }: PhotoCardType) => {
   }
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handleOnPress}>
+    <TouchableOpacity activeOpacity={0.9} style={styles.container} onPress={handleOnPress}>
       <View style={styles.imageContainer}>
         <AnimatedIcon
           ref={largeHeartIconRef}
@@ -71,40 +74,5 @@ const PhotoCard = ({ imgSrc, description, onPress }: PhotoCardType) => {
     </TouchableOpacity>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-  },
-  animatedIcon: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 2,
-    borderRadius: 160,
-    opacity: 0,
-    shadowRadius: 4,
-    shadowColor: 'black',
-    shadowOpacity: 0.3,
-    shadowOffset: {
-      width: -2,
-      height: 2,
-    },
-  },
-  description: {
-    fontSize: 14,
-    paddingLeft: 8,
-    paddingVertical: 8,
-  },
-  imageContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    width,
-    height: 300,
-  },
-})
 
 export default PhotoCard

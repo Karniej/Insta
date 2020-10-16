@@ -16,3 +16,18 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   LikedScreen: undefined
 }
+
+export type ItemType = {
+  image: string
+  model: string
+  name: string
+  year_built: number
+  id: number
+  color: string
+  active: string
+  type: string
+}
+
+export type ListItemType = {
+  item: ItemType
+}

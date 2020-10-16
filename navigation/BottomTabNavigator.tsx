@@ -5,8 +5,8 @@ import * as React from 'react'
 
 import Colors from '../constants/Colors'
 import useColorScheme from '../hooks/useColorScheme'
-import DetailsScreen from '../screens/DetailsScreen'
-import FeedScreen from '../screens/FeedScreen'
+import DetailsScreen from '../screens/DetailsScreen/DetailsScreen'
+import FeedScreen from '../screens/FeedScreen/FeedScreen'
 import LikedScreen from '../screens/LikedScreen'
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types'
 

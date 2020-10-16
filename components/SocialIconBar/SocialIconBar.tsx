@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
-import AnimatedIcon from './AnimatedIcon'
+import styles from './SocialIconBar.styles'
+import AnimatedIcon from '../AnimatedIcon'
 
 type SocialIconBarType = {
   isLiked: boolean
@@ -14,7 +15,7 @@ const SocialIconBar = ({ isLiked, onPress, heartIconRef }: SocialIconBarType) =>
       <AnimatedIcon
         ref={heartIconRef}
         name={isLiked ? 'ios-heart' : 'ios-heart-empty'}
-        color={isLiked ? 'white' : 'black'}
+        color={isLiked ? 'crimson' : 'black'}
         size={25}
       />
     </TouchableOpacity>
@@ -22,26 +23,5 @@ const SocialIconBar = ({ isLiked, onPress, heartIconRef }: SocialIconBarType) =>
     <AnimatedIcon style={styles.icon} name='ios-send' color='black' size={25} />
   </View>
 )
-
-const iconPadding = 8
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'flex-start',
-    paddingLeft: iconPadding,
-  },
-  icon: {
-    paddingRight: iconPadding,
-    paddingVertical: iconPadding,
-    shadowRadius: 4,
-    shadowColor: 'black',
-    shadowOpacity: 0.3,
-    shadowOffset: {
-      width: -2,
-      height: 2,
-    },
-  },
-})
 
 export default SocialIconBar

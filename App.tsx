@@ -6,6 +6,7 @@ import useCachedResources from './hooks/useCachedResources'
 import useColorScheme from './hooks/useColorScheme'
 import Navigation from './navigation'
 const queryCache = new QueryCache()
+
 export default function App() {
   const isLoadingComplete = useCachedResources()
   const colorScheme = useColorScheme()
