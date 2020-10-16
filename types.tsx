@@ -13,10 +13,6 @@ export type TabOneParamList = {
   DetailsScreen: undefined
 }
 
-export type TabTwoParamList = {
-  LikedScreen: undefined
-}
-
 export type ItemType = {
   image: string
   model: string

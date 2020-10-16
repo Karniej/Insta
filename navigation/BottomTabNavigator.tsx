@@ -7,7 +7,6 @@ import Colors from '../constants/Colors'
 import useColorScheme from '../hooks/useColorScheme'
 import DetailsScreen from '../screens/DetailsScreen/DetailsScreen'
 import FeedScreen from '../screens/FeedScreen/FeedScreen'
-import LikedScreen from '../screens/LikedScreen'
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
@@ -25,19 +24,10 @@ export default function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name='Feed'
-        component={TabOneNavigator}
+        component={FeedNavigator}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'md-home' : 'md-home'} color={color} />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name='Liked'
-        component={TabTwoNavigator}
-        options={{
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'ios-heart' : 'ios-heart-empty'} color={color} />
           ),
         }}
       />
@@ -55,7 +45,7 @@ function TabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const FeedStack = createStackNavigator<TabOneParamList>()
 
-function TabOneNavigator() {
+function FeedNavigator() {
   return (
     <FeedStack.Navigator initialRouteName='FeedScreen' screenOptions={{ headerShown: false }}>
       <FeedStack.Screen
@@ -65,19 +55,5 @@ function TabOneNavigator() {
       />
       <FeedStack.Screen name='DetailsScreen' component={DetailsScreen} />
     </FeedStack.Navigator>
-  )
-}
-
-const LikedStack = createStackNavigator<TabTwoParamList>()
-
-function TabTwoNavigator() {
-  return (
-    <LikedStack.Navigator screenOptions={{ headerShown: false }}>
-      <LikedStack.Screen
-        name='LikedScreen'
-        component={LikedScreen}
-        options={{ headerTitle: 'Liked' }}
-      />
-    </LikedStack.Navigator>
   )
 }
