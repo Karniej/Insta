@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import Colors from '../constants/Colors'
 import useColorScheme from '../hooks/useColorScheme'
+import DetailsScreen from '../screens/DetailsScreen'
 import FeedScreen from '../screens/FeedScreen'
 import LikedScreen from '../screens/LikedScreen'
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types'
@@ -56,12 +57,13 @@ const FeedStack = createStackNavigator<TabOneParamList>()
 
 function TabOneNavigator() {
   return (
-    <FeedStack.Navigator screenOptions={{ headerShown: false }}>
+    <FeedStack.Navigator initialRouteName='FeedScreen' screenOptions={{ headerShown: false }}>
       <FeedStack.Screen
         name='FeedScreen'
         component={FeedScreen}
         options={{ headerTitle: 'Feed' }}
       />
+      <FeedStack.Screen name='DetailsScreen' component={DetailsScreen} />
     </FeedStack.Navigator>
   )
 }

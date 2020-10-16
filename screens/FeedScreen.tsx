@@ -1,30 +1,52 @@
-import * as React from 'react'
-import { StyleSheet } from 'react-native'
-
-import { Text, View } from '../components/Themed'
-
+import { useNavigation } from '@react-navigation/native'
+import React, { useEffect } from 'react'
+import { useQuery, useQueryCache } from 'react-query'
+import { StyleSheet, FlatList, Dimensions, SafeAreaView } from 'react-native'
+import PhotoCard from '../components/PhotoCard'
+const { width } = Dimensions.get('window')
 export default function FeedScreen() {
+  const { navigate } = useNavigation()
+  const api = 'https://example-data.draftbit.com/restaurant_photos'
+  const { isLoading, error, data } = useQuery('data', () =>
+    fetch(`${api}?_limit=30`).then((res) => res.json())
+  )
+  const cache = useQueryCache()
+
+  useEffect(() => {
+    cache.invalidateQueries('data')
+    console.log('data: ', data)
+  })
+
+  const renderItem = ({ item }: any) => {
+    return (
+      <PhotoCard
+        imgSrc={item.image_url}
+        description={item.caption}
+        key={item.imgSrc}
+        onPress={() => navigate('Details')}
+      />
+    )
+  }
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Feed</Text>
-      <View style={styles.separator} lightColor='#eee' darkColor='rgba(255,255,255,0.1)' />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        contentContainerStyle={styles.contentContainer}
+        data={data}
+        renderItem={renderItem}
+      />
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#EFFAE9',
+  },
+  contentContainer: {
     alignItems: 'center',
+    width,
     justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+    backgroundColor: '#EFFAE9',
   },
 })
