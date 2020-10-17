@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, useColorScheme } from 'react-native'
 import styles from './SocialIconBar.styles'
 import AnimatedIcon from '../AnimatedIcon'
+import { persistor } from '../../redux/store'
 
 type SocialIconBarType = {
   isLiked: boolean
@@ -9,19 +10,28 @@ type SocialIconBarType = {
   heartIconRef: any
 }
 
-const SocialIconBar = ({ isLiked, onPress, heartIconRef }: SocialIconBarType) => (
-  <View style={styles.container}>
-    <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={styles.icon}>
-      <AnimatedIcon
-        ref={heartIconRef}
-        name={isLiked ? 'ios-heart' : 'ios-heart-empty'}
-        color={isLiked ? 'crimson' : 'black'}
-        size={25}
-      />
-    </TouchableOpacity>
-    <AnimatedIcon style={styles.icon} name='ios-chatbubbles' color='black' size={25} />
-    <AnimatedIcon style={styles.icon} name='ios-send' color='black' size={25} />
-  </View>
-)
+const SocialIconBar = ({ isLiked, onPress, heartIconRef }: SocialIconBarType) => {
+  const theme = useColorScheme()
+  console.log('theme: ', theme)
+  const isThemeLight = theme === 'light'
+  const iconColor = isThemeLight ? 'black' : 'white'
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={styles.icon}>
+        <AnimatedIcon
+          ref={heartIconRef}
+          name={isLiked ? 'ios-heart' : 'ios-heart-empty'}
+          color={isLiked ? 'crimson' : iconColor}
+          size={25}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => persistor.purge()}>
+        <AnimatedIcon style={styles.icon} name='ios-chatbubbles' color={iconColor} size={25} />
+      </TouchableOpacity>
+      <AnimatedIcon style={styles.icon} name='ios-send' color={iconColor} size={25} />
+    </View>
+  )
+}
 
 export default SocialIconBar

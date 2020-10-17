@@ -51,27 +51,29 @@ const PhotoCard = ({ imgSrc, description, onPress }: PhotoCardType) => {
   }
 
   return (
-    <TouchableOpacity activeOpacity={0.9} style={styles.container} onPress={handleOnPress}>
-      <View style={styles.imageContainer}>
-        <AnimatedIcon
-          ref={largeHeartIconRef}
-          style={styles.animatedIcon}
-          duration={500}
-          delay={200}
-          name='ios-heart'
-          color='white'
-          size={80}
-          useNativeDriver
-        />
-        <Image style={styles.image} source={{ uri: imgSrc }} />
-      </View>
+    <View style={styles.container}>
+      <TouchableOpacity activeOpacity={0.9} onPress={handleOnPress}>
+        <View style={styles.imageContainer}>
+          <AnimatedIcon
+            ref={largeHeartIconRef}
+            style={styles.animatedIcon}
+            duration={500}
+            delay={200}
+            name='ios-heart'
+            color='white'
+            size={80}
+            useNativeDriver
+          />
+          <Image style={styles.image} source={{ uri: imgSrc }} />
+        </View>
+      </TouchableOpacity>
       <SocialIconBar
         heartIconRef={smallHeartIconRef}
         onPress={handleToggleLike}
         isLiked={isLiked}
       />
       {isDescriptionAvailable && <Text style={styles.description}>{description}</Text>}
-    </TouchableOpacity>
+    </View>
   )
 }
 

@@ -13,7 +13,7 @@ export type TabOneParamList = {
   DetailsScreen: undefined
 }
 
-export type ItemType = {
+export type SingleShip = {
   image: string
   model: string
   name: string
@@ -25,5 +25,24 @@ export type ItemType = {
 }
 
 export type ListItemType = {
-  item: ItemType
+  item: SingleShip
 }
+
+export type State = {
+  ships: Array<SingleShip>
+  isLoading: boolean
+}
+
+type RehydrateAction = {
+  type: 'persist/REHYDRATE'
+  payload: {
+    ships: Array<SingleShip>
+  }
+}
+
+type GetDataAction = {
+  type: 'REQUEST_API_DATA' | 'RECEIVE_API_DATA'
+  payload: Array<SingleShip>
+}
+
+export type Actions = GetDataAction | RehydrateAction

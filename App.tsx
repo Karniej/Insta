@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
+import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 import useCachedResources from './hooks/useCachedResources'
 import useColorScheme from './hooks/useColorScheme'
 import Navigation from './navigation'
-const queryCache = new QueryCache()
+import { persistor, store } from './redux/store'
+import { ActivityIndicator } from 'react-native'
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
@@ -15,12 +17,14 @@ export default function App() {
     return null
   } else {
     return (
-      <SafeAreaProvider>
-        <ReactQueryCacheProvider queryCache={queryCache}>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </ReactQueryCacheProvider>
-      </SafeAreaProvider>
+      <Provider store={store}>
+        <PersistGate loading={<ActivityIndicator size='large' />} persistor={persistor}>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </PersistGate>
+      </Provider>
     )
   }
 }
