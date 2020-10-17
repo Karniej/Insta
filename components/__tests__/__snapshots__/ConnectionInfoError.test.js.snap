@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  forwardedRef={[Function]}
+  style={
+    Object {
+      "alignItems": "flex-start",
+      "backgroundColor": "indianred",
+      "flexDirection": "row",
+      "paddingHorizontal": 10,
+      "paddingVertical": 8,
+    }
+  }
+>
+  <Text />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#000",
+        },
+        Object {
+          "color": "white",
+          "fontSize": 12,
+          "fontWeight": "bold",
+          "paddingLeft": 10,
+          "textAlign": "left",
+          "textTransform": "uppercase",
+        },
+      ]
+    }
+  >
+    error
+  </Text>
+</View>
+`;

@@ -12,9 +12,7 @@ type SocialIconBarType = {
 
 const SocialIconBar = ({ isLiked, onPress, heartIconRef }: SocialIconBarType) => {
   const theme = useColorScheme()
-  console.log('theme: ', theme)
-  const isThemeLight = theme === 'light'
-  const iconColor = isThemeLight ? 'black' : 'white'
+  const iconColor = theme === 'light' ? 'black' : 'white'
 
   return (
     <View style={styles.container}>
