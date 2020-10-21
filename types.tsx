@@ -13,6 +13,11 @@ export type TabOneParamList = {
   DetailsScreen: undefined
 }
 
+export type TabTwoParamList = {
+  LikedScreen: undefined
+  DetailsScreen: undefined
+}
+
 export type SingleShip = {
   image: string
   model: string
@@ -24,25 +29,33 @@ export type SingleShip = {
   type: string
 }
 
+export type ListOfShips = Array<SingleShip>
+
 export type ListItemType = {
   item: SingleShip
 }
 
 export type State = {
-  ships: Array<SingleShip>
+  ships: ListOfShips
   isLoading: boolean
+  likedShips: ListOfShips
 }
 
 type RehydrateAction = {
   type: 'persist/REHYDRATE'
   payload: {
-    ships: Array<SingleShip>
+    ships: ListOfShips
   }
 }
 
 type GetDataAction = {
   type: 'REQUEST_API_DATA' | 'RECEIVE_API_DATA'
-  payload: Array<SingleShip>
+  payload: ListOfShips
 }
 
-export type Actions = GetDataAction | RehydrateAction
+type ToggleLikedAction = {
+  type: 'TOGGLE_LIKED_SHIP'
+  payload: SingleShip
+}
+
+export type Actions = GetDataAction | RehydrateAction | ToggleLikedAction

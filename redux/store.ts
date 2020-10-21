@@ -9,7 +9,7 @@ const sagaMiddleware = createSagaMiddleware()
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['ships']
+    whitelist: ['ships', 'likedShips']
 }
 const persistedReducers = persistReducer(persistConfig, rootReducer)
 

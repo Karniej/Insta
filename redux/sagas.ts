@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { request, gql } from 'graphql-request'
-import { receiveApiData, requestApiData, REQUEST_API_DATA } from './actions'
+import { receiveApiData, REQUEST_API_DATA } from './actions'
 const fetchData = async () => {
     const query = gql`{
     ships {
@@ -10,6 +10,7 @@ const fetchData = async () => {
         year_built
         active
         type
+        id
     }
     }
 `

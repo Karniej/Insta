@@ -4,6 +4,7 @@ export default StyleSheet.create({
     networkErrorContainer: {
         paddingHorizontal: 10,
         paddingVertical: 8,
+        marginTop: 44,
         backgroundColor: 'indianred',
         flexDirection: 'row',
         alignItems: 'flex-start'

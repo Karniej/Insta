@@ -8,6 +8,7 @@ import useColorScheme from './hooks/useColorScheme'
 import Navigation from './navigation'
 import { persistor, store } from './redux/store'
 import { ActivityIndicator } from 'react-native'
+import ConnectionInfoError from './components/ConnectionInfoError/ConnectionInfoError'
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
@@ -20,6 +21,7 @@ export default function App() {
       <Provider store={store}>
         <PersistGate loading={<ActivityIndicator size='large' />} persistor={persistor}>
           <SafeAreaProvider>
+            <ConnectionInfoError />
             <Navigation colorScheme={colorScheme} />
             <StatusBar />
           </SafeAreaProvider>

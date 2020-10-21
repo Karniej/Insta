@@ -1,28 +1,22 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FlatList, SafeAreaView, ActivityIndicator } from 'react-native'
-import { View, Text } from '../../components/Themed'
+import { Text, View } from '../../components/Themed'
 import PhotoCard from '../../components/PhotoCard/PhotoCard'
-import styles from './FeedScreen.styles'
+import styles from './LikedScreen.styles'
 import { ListItemType, SingleShip, State } from '../../types'
-import { requestApiData, toggleLikedShip } from '../../redux/actions'
 import { placeholderImageLink } from '../../constants/constants'
+import { toggleLikedShip } from '../../redux/actions'
 
-export default function FeedScreen() {
+export default function LikedScreen() {
   const { navigate } = useNavigation()
   const dispatch = useDispatch()
-  const { ships, isLoading, likedShips } = useSelector(
-    ({ ships, isLoading, likedShips }: State) => ({
-      ships,
-      isLoading,
-      likedShips,
-    })
-  )
-
-  useEffect(() => {
-    dispatch(requestApiData())
-  }, [dispatch])
+  const { isLoading, likedShips } = useSelector(({ isLoading, likedShips }: State) => ({
+    isLoading,
+    likedShips,
+  }))
+  const isLikedShipsEmpty = likedShips.length === 0
 
   const handleOnPressLike = (item: SingleShip) => {
     dispatch(toggleLikedShip(item))
@@ -30,12 +24,13 @@ export default function FeedScreen() {
 
   const keyExtractor = (item: SingleShip, index: number) => `${item.name}, ${index}`
   const renderItem = ({ item }: ListItemType) => {
-    const isLiked = likedShips.some((likedShip) => likedShip.id === item.id)
+    const isLiked = item && likedShips.some((likedShip) => likedShip.id === item.id)
+
     return (
       <PhotoCard
+        onPressLike={() => handleOnPressLike(item)}
         imgSrc={item.image || placeholderImageLink}
         description={`${item.name}, ${item.type}`}
-        onPressLike={() => handleOnPressLike(item)}
         isLiked={isLiked}
         onPress={() =>
           navigate('DetailsScreen', {
@@ -50,11 +45,13 @@ export default function FeedScreen() {
       <FlatList
         contentContainerStyle={styles.contentContainer}
         keyExtractor={keyExtractor}
-        data={ships || []}
+        data={likedShips || []}
         renderItem={renderItem}
         ListHeaderComponent={
           <View style={styles.separator}>
-            <Text style={styles.title}>SPACEX SHIPS</Text>
+            <Text style={styles.title}>
+              {isLikedShipsEmpty ? "You don't like any ship right now." : 'liked ships'}
+            </Text>
           </View>
         }
         ListFooterComponent={isLoading ? <ActivityIndicator size='large' /> : null}

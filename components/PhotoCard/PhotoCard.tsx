@@ -5,24 +5,28 @@ import { iconAnimation } from '../../constants/iconAnimation'
 import AnimatedIcon from '../AnimatedIcon'
 import SocialIconBar from '../SocialIconBar/SocialIconBar'
 import styles from './PhotoCard.styles'
+import { SingleShip } from '../../types'
 
 type PhotoCardType = {
   imgSrc: string
   description: string
   onPress?: () => void
+  onPressLike: () => void
+  isLiked: boolean
 }
 
-const PhotoCard = ({ imgSrc, description, onPress }: PhotoCardType) => {
-  const [isLiked, setIsLiked] = useState(false)
+const PhotoCard = ({ imgSrc, description, onPress, onPressLike, isLiked }: PhotoCardType) => {
   const smallHeartIconRef = useRef(null)
   const largeHeartIconRef = useRef(null)
   const lastPress = useRef<number>(0)
   const isDescriptionAvailable = description?.length > 0
+
   const handleOnPress = () => {
     const doublePressDelay = 400
     const firstClickTimeInSeconds = new Date().getTime()
     const delta = firstClickTimeInSeconds - lastPress.current
     if (delta < doublePressDelay) {
+      onPressLike()
       // If the delta is less than specified doublePressDelay value, it fires the function for animations
       iconAnimation({
         isDoubleClickType: true,
@@ -31,7 +35,6 @@ const PhotoCard = ({ imgSrc, description, onPress }: PhotoCardType) => {
         smallHeartIconRef,
         liked: isLiked,
       })
-      !isLiked && setIsLiked(true)
     } else {
       onPress && onPress()
     }
@@ -40,7 +43,7 @@ const PhotoCard = ({ imgSrc, description, onPress }: PhotoCardType) => {
   }
 
   const handleToggleLike = () => {
-    setIsLiked(!isLiked)
+    onPressLike()
     iconAnimation({
       isDoubleClickType: false,
       shouldAnimateLargeIcon: true,

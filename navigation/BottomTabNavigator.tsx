@@ -7,6 +7,7 @@ import Colors from '../constants/Colors'
 import useColorScheme from '../hooks/useColorScheme'
 import DetailsScreen from '../screens/DetailsScreen/DetailsScreen'
 import FeedScreen from '../screens/FeedScreen/FeedScreen'
+import LikedScreen from '../screens/LikedScreen/LikedScreen'
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>()
@@ -28,6 +29,15 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'md-home' : 'md-home'} color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name='Liked'
+        component={LikedNavigator}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'ios-heart' : 'ios-heart-empty'} color={color} />
           ),
         }}
       />
@@ -55,5 +65,20 @@ function FeedNavigator() {
       />
       <FeedStack.Screen name='DetailsScreen' component={DetailsScreen} />
     </FeedStack.Navigator>
+  )
+}
+
+const LikedStack = createStackNavigator<TabTwoParamList>()
+
+function LikedNavigator() {
+  return (
+    <LikedStack.Navigator initialRouteName='LikedScreen' screenOptions={{ headerShown: false }}>
+      <LikedStack.Screen
+        name='LikedScreen'
+        component={LikedScreen}
+        options={{ headerTitle: 'Feed' }}
+      />
+      <LikedStack.Screen name='DetailsScreen' component={DetailsScreen} />
+    </LikedStack.Navigator>
   )
 }
